@@ -7,4 +7,7 @@ Neste projeto, eu viso aperfeiçoar as minhas habilidades em desenvolver APIs co
 
 - Java
 - Spring Boot
+- Spring Framework
+- JPA e Hibernate
+- JWT
 - Docker
