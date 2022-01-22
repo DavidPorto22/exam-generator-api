@@ -53,7 +53,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		// {"token":"token", "exp":"date"}
 		token = Constants.TOKEN_PREFIX + token;
 		String tokenJson = "{\"token\":" + addQuotes(token)
-						+ "\"exp\":" + addQuotes(expTimeUTC.toString());
+						+ ",\"exp\":" + addQuotes(expTimeUTC.toString()) + "}";
 		response.getWriter().write(tokenJson);
 		response.addHeader("Content-Type", "application/json;charset=UTF-8");
 		response.addHeader(Constants.HEADER_STRING, token);

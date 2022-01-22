@@ -30,6 +30,13 @@ public class AbstractEntity implements Serializable{
 		AbstractEntity other = (AbstractEntity) obj;
 		return Objects.equals(id, other.id);
 	}
-	
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 	
 }

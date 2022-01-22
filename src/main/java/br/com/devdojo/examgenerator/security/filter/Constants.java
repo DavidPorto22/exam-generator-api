@@ -1,5 +1,7 @@
 package br.com.devdojo.examgenerator.security.filter;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -12,5 +14,7 @@ public class Constants {
 	
 	public static void main(String[] args) {
 		System.out.println(new BCryptPasswordEncoder().encode("devdojo"));
+		System.out.println(LocalDateTime.now());
+		System.out.println(new Date());
 	}
 }
