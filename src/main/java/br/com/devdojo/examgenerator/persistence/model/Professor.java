@@ -2,11 +2,17 @@ package br.com.devdojo.examgenerator.persistence.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+
 @Entity
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Professor extends AbstractEntity {
 	@NotEmpty(message = "The field name cannot be ampty")
 	private String name;
