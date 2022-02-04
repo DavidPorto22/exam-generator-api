@@ -25,6 +25,6 @@ public class EndpointUtil implements Serializable{
 	
 	public Professor extractProfessorFromToken() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		return ((ApplicationUser) authentication.getPrincipal()).getProfessor();
+		return ((ApplicationUser) authentication.getPrincipal()).getProfessor(); 
 	}
 }

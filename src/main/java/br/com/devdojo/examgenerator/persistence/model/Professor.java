@@ -31,5 +31,9 @@ public class Professor extends AbstractEntity {
 	}
 	public void setEmail(String email) {
 		this.email = email;
-	}	
+	}
+	@Override
+	public String toString() {
+		return "Professor [name=" + name + ", email=" + email + ", id=" + id + ", enabled=" + enabled + "]";
+	}
 }

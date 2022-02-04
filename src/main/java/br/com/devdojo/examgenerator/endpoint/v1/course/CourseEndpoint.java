@@ -4,7 +4,6 @@ import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,9 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.devdojo.examgenerator.persistence.model.ApplicationUser;
+import br.com.devdojo.examgenerator.endpoint.v1.genericservice.GenericService;
 import br.com.devdojo.examgenerator.persistence.model.Course;
-import br.com.devdojo.examgenerator.persistence.model.Professor;
 import br.com.devdojo.examgenerator.persistence.repository.CourseRepository;
 import br.com.devdojo.examgenerator.util.EndpointUtil;
 
@@ -26,43 +24,35 @@ import br.com.devdojo.examgenerator.util.EndpointUtil;
 public class CourseEndpoint {
 	private final CourseRepository courseRepository;
 	private final EndpointUtil endpointUtil;
-	private final CourseService courseService;
+	private final GenericService genericService;
 	
-	public CourseEndpoint(CourseRepository courseRepository, EndpointUtil endpointUtil, CourseService courseService) {
+	public CourseEndpoint(CourseRepository courseRepository, EndpointUtil endpointUtil, GenericService genericService) {
 		this.courseRepository = courseRepository;
 		this.endpointUtil = endpointUtil;
-		this.courseService = courseService;
+		this.genericService = genericService;
 	}
 	
 	@GetMapping(path = "/{id}")
 	public ResponseEntity<?> getCourseById(@PathVariable Long id) {
 		return endpointUtil
-				.returnObjectOrNotFound(courseRepository.findByIdAndProfessor(id, endpointUtil.extractProfessorFromToken()));
+				.returnObjectOrNotFound(courseRepository.getById(id));
 	}
 	
 	@GetMapping(path = "/list")
-	public ResponseEntity<?> listCourses(){
-		return endpointUtil
-				.returnObjectOrNotFound(courseRepository.findAllByProfessor(endpointUtil.extractProfessorFromToken()));
-	}
-	
-	@GetMapping(path = "/list/{name}")
-	public ResponseEntity<?> getCourseByName(@PathVariable String name){
-		return endpointUtil
-				.returnObjectOrNotFound(courseRepository.findByNameAndProfessor(name, endpointUtil.extractProfessorFromToken()));
+	public ResponseEntity<?> listCourses(@RequestParam(value="name", defaultValue="") String name){
+		return new ResponseEntity<>(courseRepository.listCoursesByName(name), HttpStatus.OK);
 	}
 	
 	@DeleteMapping(path = "/{id}")
 	public ResponseEntity<?> delete(@PathVariable Long id){
-		Professor professor = endpointUtil.extractProfessorFromToken();
-		courseService.throwResourceNotFoundIfCourseDoesNotExist(courseRepository.findByIdAndProfessor(id, professor));
-		courseRepository.deleteByIdAndProfessor(id, professor);
+		genericService.throwResourceNotFoundIfDoesNotExist(id, courseRepository, "Course not found");
+		courseRepository.deleteById(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@PutMapping
 	public ResponseEntity<?> update(@Valid @RequestBody Course course) {
-		courseService.throwResourceNotFoundIfCourseDoesNotExist(courseRepository.findByIdAndProfessor(course.getId(), endpointUtil.extractProfessorFromToken()));
+		genericService.throwResourceNotFoundIfDoesNotExist(course, courseRepository, "Course not found");
 		courseRepository.save(course);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
@@ -72,7 +62,7 @@ public class CourseEndpoint {
 		course.setProfessor(endpointUtil.extractProfessorFromToken());
 		return new ResponseEntity<>(courseRepository.save(course), HttpStatus.OK);
 	}
-	
+
 }
 
 
