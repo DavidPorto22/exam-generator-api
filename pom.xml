@@ -3,20 +3,26 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.6.2</version>
-		<relativePath/> <!-- lookup parent from repository -->
-	</parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.1.0.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
 	<groupId>br.com.devdojo</groupId>
 	<artifactId>exam-generator</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>exam-generator</name>
 	<description>Project from DevDojo</description>
 	<properties>
-		<java.version>17</java.version>
+		<java.version>1.8</java.version>
 	</properties>
 	<dependencies>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-java8</artifactId>
+			<version>5.0.4.Final</version>
+		</dependency>
+	
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt</artifactId>
@@ -63,24 +69,34 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
-		
-		<!-- <dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<scope>test</scope>
-		</dependency> -->
-		
-		<dependency>
-	      	<groupId>org.springdoc</groupId>
-	     	<artifactId>springdoc-openapi-ui</artifactId>
-	      	<version>1.6.4</version>
+	   
+	   <dependency>
+	   		<groupId>io.springfox</groupId>
+	   		<artifactId>springfox-swagger2</artifactId>
+	   		<version>2.7.0</version>
+	   		<scope>compile</scope>
+	   </dependency>
+	   
+	   <dependency>
+	   		<groupId>io.springfox</groupId>
+	   		<artifactId>springfox-swagger-ui</artifactId>
+	   		<version>2.7.0</version>
+	  		<scope>compile</scope>
 	   </dependency>
 	   
 	   <dependency>
 		    <groupId>org.projectlombok</groupId>
 		    <artifactId>lombok</artifactId>
+		    <version>1.18.22</version>
 		    <scope>provided</scope>
 		</dependency>
+		
+		<dependency>
+		    <groupId>javax.validation</groupId>
+		    <artifactId>validation-api</artifactId>
+		    <version>2.0.1.Final</version>
+		</dependency>
+		
 	</dependencies>
 
 	<build>

@@ -45,15 +45,15 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
 			Authentication authResult) throws IOException, ServletException {
 		ZonedDateTime expTimeUTC = ZonedDateTime.now(ZoneOffset.UTC).plus(Constants.EXPIRATION_TIME, ChronoUnit.MILLIS);
+		String accessType = ((ApplicationUser) authResult.getPrincipal()).getProfessor() != null ? "professor" : "student";
 		String token = Jwts.builder()
 				.setSubject(((ApplicationUser) authResult.getPrincipal()).getUsername())
 				.setExpiration(Date.from(expTimeUTC.toInstant()))
+				.claim("accessType", accessType)
 				.signWith(SignatureAlgorithm.HS256, Constants.SECRET)
 				.compact();
-		// {"token":"token", "exp":"date"}
 		token = Constants.TOKEN_PREFIX + token;
-		String tokenJson = "{\"token\":" + addQuotes(token)
-						+ ",\"exp\":" + addQuotes(expTimeUTC.toString()) + "}";
+		String tokenJson = String.format("{\"token\":%s,\"exp\":%s,\"accessType\":%s}", addQuotes(token), addQuotes(expTimeUTC.toString()), addQuotes(accessType));
 		response.getWriter().write(tokenJson);
 		response.addHeader("Content-Type", "application/json;charset=UTF-8");
 		response.addHeader(Constants.HEADER_STRING, token);

@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.devdojo.examgenerator.persistence.model.Professor;
 import br.com.devdojo.examgenerator.persistence.repository.ProfessorRepository;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("v1/professor")
@@ -25,10 +23,7 @@ public class ProfessorEndpoint {
 	}
 	
 	@GetMapping(path = "/{id}")
-	@Operation(summary = "Find professor by his ID", description = "We have to make this method better")
-	@ApiResponses(value = {
-			@ApiResponse(responseCode = "200", description = "Successful Operation")
-	})
+    @ApiOperation(value = "Find professor by his ID", notes = "We have to make this method better", response = Professor.class)
 	public ResponseEntity<?> getProfessorById(@PathVariable Long id){
 		Professor professor = professorRepository.findById(id).get();
 		return new ResponseEntity<>(professor, HttpStatus.OK);

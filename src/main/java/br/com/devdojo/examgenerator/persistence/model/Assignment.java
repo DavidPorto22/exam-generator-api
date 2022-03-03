@@ -1,14 +1,10 @@
 package br.com.devdojo.examgenerator.persistence.model;
 
-import java.util.List;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -18,22 +14,27 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Question extends AbstractEntity{
+public class Assignment extends AbstractEntity {
 	@NotEmpty(message = "The field title cannot be empty")
 	private String title;
-	@ManyToOne
+	private LocalDateTime createdAt = LocalDateTime.now();
+	@ManyToOne(optional = false)
 	private Course course;
-	@ManyToOne
+	@ManyToOne(optional = false)
 	private Professor professor;
-	@OneToMany(mappedBy = "question", fetch = FetchType.LAZY)
-	@JsonIgnore
-	private List<Choice> choices;
+	private String accessCode;
 	
 	public String getTitle() {
 		return title;
 	}
 	public void setTitle(String title) {
 		this.title = title;
+	}
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
 	}
 	public Course getCourse() {
 		return course;
@@ -47,10 +48,11 @@ public class Question extends AbstractEntity{
 	public void setProfessor(Professor professor) {
 		this.professor = professor;
 	}
-	public List<Choice> getChoices() {
-		return choices;
+	public String getAccessCode() {
+		return accessCode;
 	}
-	public void setChoices(List<Choice> choices) {
-		this.choices = choices;
+	public void setAccessCode(String accessCode) {
+		this.accessCode = accessCode;
 	}
+	
 }

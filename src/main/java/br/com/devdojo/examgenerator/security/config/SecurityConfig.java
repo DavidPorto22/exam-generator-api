@@ -13,7 +13,7 @@ import br.com.devdojo.examgenerator.security.service.CustomUserDetailsService;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-	private final CustomUserDetailsService customUserDetailsService;
+	private final CustomUserDetailsService customUserDetailsService; 
 	
 	public SecurityConfig(CustomUserDetailsService customUserDetailsService) {
 		this.customUserDetailsService = customUserDetailsService;
@@ -25,6 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.and().csrf().disable()
 				.authorizeRequests()
 				.antMatchers("/*/professor/**").hasAnyRole("PROFESSOR")
+				.antMatchers("/*/student/**").hasAnyRole("STUDENT")
 				.and()
 				.addFilter(new JWTAuthenticationFilter(authenticationManager()))
 				.addFilter(new JWTAuthorizationFilter(authenticationManager(), customUserDetailsService));
