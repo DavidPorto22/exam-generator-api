@@ -14,7 +14,7 @@ Finally, you can run the project in your favorite IDE. When you run the project,
 
 ## How to Use the Project
 
-Since the project uses JWT, for being able to use all the endpoints available in the project, you going to have to send a Post request to localhost:8085/login with json pattern "{"username":"username","password":"password"}" which will return a token for later requests. Do not forget to populate the ApplicationUser and Professor tables before sending the request.
+Since the project uses JWT, for being able to use all the endpoints available in the project, you going to have to send a Post request to "localhost:8085/login" with json pattern in the body "{"username":"username","password":"password"}" which will return a token for later requests. Do not forget to populate the ApplicationUser and Professor tables before sending the request.
 
 Since all the API's endpoints are documented with SpringFox, you just need to access the url "localhost:8085/swagger-ui.html" in your browser to be able to access the project's documentation. With that, you will have access to all endpoints' information.
 
